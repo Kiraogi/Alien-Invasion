@@ -10,10 +10,21 @@ class Ship():
         self.screen_rect = ai_game.screen.get_rect()
 
         # Загрузка изображения корабля и получение прямоугольника.
-        self.image = pygame.image.load('images/Ship.png')
+        self.image = pygame.image.load('images/Ship1.png')
         self.rect = self.image.get_rect()
         # Каждый новый корабль появляется у нижнего края экрана.
         self.rect.midbottom = self.screen_rect.midbottom
+
+        # Флаг перемещния.
+        self.moving_right = False
+        self.moving_left = False
+
+    def update(self):
+        """Обновляет позицию корабля с учетом флага."""
+        if self.moving_right:
+            self.rect.x += 1
+        if self.moving_left:
+            self.rect.x -= 1
 
     def blitme(self):
         """Рисует корабль в текущей позиции."""
