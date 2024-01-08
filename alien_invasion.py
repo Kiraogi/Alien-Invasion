@@ -15,10 +15,9 @@ from alien import Alien
 class AlienInvasion:
     """Класс для управления ресурсами и поведения игры."""
 
-    def __int__(self):
+    def __int__(self) -> None:
         """Инициализует игру и создает игровые ресурсы."""
         pygame.init()
-
         self.settings = Settings()
 
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
@@ -46,14 +45,11 @@ class AlienInvasion:
         """Запуск основного цикла игры."""
         while True:
             self._check_events()
-
             if self.stats.game_active:
                 self.ship.update()
                 self._update_bullets()
                 self._update_aliens()
-
             self._update_screen()
-
             # Отображение последнего прорисованного экрана.
             pygame.display.flip()
 
