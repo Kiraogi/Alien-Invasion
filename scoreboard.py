@@ -14,14 +14,14 @@ class Scoreboard():
         self.screen_rect = self.screen.get_rect()
         self.settings = ai_game.settings
         self.stats = ai_game.stats
-        self.prep_score()
-        self.prep_high_score()
-        self.prep_level()
-        self.prep_ships()
 
         # Настройки шрифта для вывода счета.
         self.text_color = (30, 30, 30)
         self.font = pygame.font.SysFont(None, 48)
+        self.prep_score()
+        self.prep_high_score()
+        self.prep_level()
+        self.prep_ships()
 
     def prep_score(self):
         """Преобразует текущий счет в графическое изображение."""

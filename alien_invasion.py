@@ -15,7 +15,7 @@ from alien import Alien
 class AlienInvasion:
     """Класс для управления ресурсами и поведения игры."""
 
-    def __int__(self) -> None:
+    def __init__(self) -> None:
         """Инициализует игру и создает игровые ресурсы."""
         pygame.init()
         self.settings = Settings()
@@ -45,10 +45,12 @@ class AlienInvasion:
         """Запуск основного цикла игры."""
         while True:
             self._check_events()
+
             if self.stats.game_active:
                 self.ship.update()
                 self._update_bullets()
                 self._update_aliens()
+
             self._update_screen()
             # Отображение последнего прорисованного экрана.
             pygame.display.flip()
@@ -160,11 +162,20 @@ class AlienInvasion:
         # Проверить, добрались ли пришельцы до нижнего края экрана.
         self._check_aliens_bottom()
 
+    def _check_aliens_bottom(self):
+        """Проверяет, достигнут ли флот края экрана."""
+        screen_rect = self.screen.get_rect()
+        for alien in self.aliens.sprites():
+            if alien.rect.bottom >= screen_rect.bottom:
+                # Происходит то же, что при столкновении с кораблем.
+                self._ship_hit()
+                break
+
     def _create_fleet(self):
         """Создание флота вторжения."""
         # Создание пришельца.
         alien = Alien(self)
-        alien_width, alien_height = alien.rect.width
+        alien_width, alien_height = alien.rect.size
         available_space_x = self.settings.screen_width - (2 * alien_width)
         number_aliens_x = available_space_x // (2 * alien_width)
 
@@ -178,13 +189,13 @@ class AlienInvasion:
             for alien_number in range(number_aliens_x):
                 self._create_alien(alien_number, row_number)
 
-    def _create_alien(self, alien_number):
+    def _create_alien(self, alien_number, row_number):
         """Создание пришельца и размещение его в ряду."""
         alien = Alien(self)
-        alien_width, alien_height = alien.rect.width
+        alien_width, alien_height = alien.rect.size
         alien.x = alien_width + 2 * alien_width * alien_number
         alien.rect.x = alien.x
-        alien.rect.y = alien.rect.height + 2 * alien.rect.height * alien_number
+        alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_number
         self.aliens.add(alien)
 
     def _check_fleet_edges(self):
