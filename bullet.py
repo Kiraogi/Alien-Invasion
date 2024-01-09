@@ -2,7 +2,7 @@ import pygame
 from pygame.sprite import Sprite
 
 
-class Bullet():
+class Bullet(Sprite):
     """Класс для управления снарядов в  текущей позиции коробля."""
 
     def __init__(self, ai_game):
